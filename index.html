@@ -138,6 +138,12 @@
             gap: 30px;
         }
 
+        /* Left Column: Vinyl Player + Player Controls */
+        .vinyl-player-column {
+            display: flex;
+            flex-direction: column;
+        }
+
         /* Compact Vinyl Player */
         .vinyl-player {
             display: flex;
@@ -300,11 +306,90 @@
             margin: 0 auto;
         }
 
-        /* Track List with Player Controls on Top */
-        .track-list-container {
+        /* Player Controls Under Vinyl Player */
+        .player-controls {
+            background-color: var(--light-gray);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .control-buttons {
             display: flex;
-            flex-direction: column;
+            gap: 12px;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+
+        .control-btn {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background-color: rgba(0, 0, 0, 0.3);
+            border: none;
+            color: var(--offwhite);
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .control-btn:hover {
+            background-color: var(--accent);
+            color: var(--black);
+        }
+
+        .control-btn.active {
+            background-color: var(--accent);
+            color: var(--black);
+        }
+
+        .control-btn.play-pause {
+            width: 50px;
+            height: 50px;
+            font-size: 20px;
+            background-color: var(--accent);
+            color: var(--black);
+        }
+
+        .control-btn.play-pause:hover {
+            transform: scale(1.05);
+        }
+
+        .progress-container {
+            width: 100%;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 2px;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .progress {
             height: 100%;
+            background: linear-gradient(90deg, var(--accent), #ff6b9d);
+            border-radius: 2px;
+            width: 30%;
+        }
+
+        .time-display {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 8px;
+            font-size: 12px;
+            color: rgba(245, 241, 230, 0.7);
+        }
+
+        /* Track List Below Player Controls */
+        .track-list-container {
+            margin-top: 20px;
         }
 
         .track-list-header {
@@ -334,93 +419,9 @@
             color: rgba(245, 241, 230, 0.7);
         }
 
-        /* Player Controls on Top of Track List */
-        .track-list-player-controls {
-            background-color: rgba(0, 0, 0, 0.2);
-            border-radius: 10px;
-            padding: 15px;
-            margin-bottom: 15px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .control-buttons {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 12px;
-        }
-
-        .control-btn {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background-color: rgba(0, 0, 0, 0.3);
-            border: none;
-            color: var(--offwhite);
-            font-size: 14px;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .control-btn:hover {
-            background-color: var(--accent);
-            color: var(--black);
-        }
-
-        .control-btn.active {
-            background-color: var(--accent);
-            color: var(--black);
-        }
-
-        .control-btn.play-pause {
-            width: 45px;
-            height: 45px;
-            font-size: 16px;
-            background-color: var(--accent);
-            color: var(--black);
-        }
-
-        .control-btn.play-pause:hover {
-            transform: scale(1.05);
-        }
-
-        .progress-container {
-            width: 100%;
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 4px;
-            background-color: rgba(0, 0, 0, 0.3);
-            border-radius: 2px;
-            position: relative;
-            cursor: pointer;
-            margin-bottom: 8px;
-        }
-
-        .progress {
-            height: 100%;
-            background: linear-gradient(90deg, var(--accent), #ff6b9d);
-            border-radius: 2px;
-            width: 30%;
-        }
-
-        .time-display {
-            display: flex;
-            justify-content: space-between;
-            font-size: 12px;
-            color: rgba(245, 241, 230, 0.7);
-        }
-
-        /* Track List */
         .track-list {
-            flex-grow: 1;
-            overflow-y: auto;
             max-height: 280px;
+            overflow-y: auto;
             padding-right: 10px;
         }
 
@@ -487,11 +488,98 @@
             color: rgba(245, 241, 230, 0.7);
         }
 
+        /* Right Column: Lyrics Section */
+        .lyrics-section {
+            background-color: var(--gray);
+            border-radius: 16px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .lyrics-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .lyrics-header h3 {
+            font-size: 18px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .lyrics-header h3 i {
+            color: var(--accent);
+        }
+
+        .lyrics-scroll-indicator {
+            background-color: var(--light-gray);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            color: rgba(245, 241, 230, 0.7);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .lyrics-container {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding-right: 10px;
+            line-height: 1.8;
+        }
+
+        .lyrics-container::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        .lyrics-container::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+        }
+
+        .lyrics-container::-webkit-scrollbar-thumb {
+            background: var(--accent);
+            border-radius: 10px;
+        }
+
+        .lyrics-line {
+            margin-bottom: 15px;
+            color: rgba(245, 241, 230, 0.8);
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        .lyrics-word {
+            transition: all 0.3s;
+            display: inline-block;
+            padding: 0 2px;
+        }
+
+        .lyrics-word.active {
+            color: var(--accent);
+            text-shadow: 0 0 10px var(--accent-glow), 0 0 20px var(--accent-glow);
+            transform: scale(1.05);
+            font-weight: 600;
+        }
+
+        .lyrics-line.active-line {
+            color: var(--offwhite);
+        }
+
         /* Bottom Sections Grid */
         .bottom-sections {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 25px;
+            margin-top: 25px;
         }
 
         .artwork-section, .early-access-section {
@@ -661,6 +749,10 @@
                 grid-template-columns: 1fr;
                 gap: 20px;
             }
+            
+            .lyrics-section {
+                min-height: 400px;
+            }
         }
 
         @media (max-width: 768px) {
@@ -689,20 +781,20 @@
                 display: none;
             }
             
-            .track-list-player-controls {
-                padding: 12px;
+            .player-controls {
+                padding: 15px;
             }
             
             .control-btn {
-                width: 36px;
-                height: 36px;
-                font-size: 13px;
+                width: 40px;
+                height: 40px;
+                font-size: 14px;
             }
             
             .control-btn.play-pause {
-                width: 40px;
-                height: 40px;
-                font-size: 15px;
+                width: 45px;
+                height: 45px;
+                font-size: 18px;
             }
         }
 
@@ -727,6 +819,10 @@
             
             .artwork-display {
                 height: 140px;
+            }
+            
+            .lyrics-line {
+                font-size: 14px;
             }
         }
 
@@ -811,44 +907,39 @@
                 </div>
                 
                 <div class="player-body">
-                    <!-- Vinyl Player -->
-                    <div class="vinyl-player">
-                        <div class="vinyl-container">
-                            <div class="vinyl-disk playing" id="vinylDisk">
-                                <div class="vinyl-label">CSSR</div>
-                                <div class="vinyl-lines"></div>
+                    <!-- Left Column: Vinyl Player + Player Controls + Track List -->
+                    <div class="vinyl-player-column">
+                        <!-- Vinyl Player -->
+                        <div class="vinyl-player">
+                            <div class="vinyl-container">
+                                <div class="vinyl-disk playing" id="vinylDisk">
+                                    <div class="vinyl-label">CSSR</div>
+                                    <div class="vinyl-lines"></div>
+                                </div>
+                                <div class="vinyl-arm playing" id="vinylArm">
+                                    <div class="arm-base"></div>
+                                    <div class="arm-rod"></div>
+                                    <div class="arm-head"></div>
+                                </div>
                             </div>
-                            <div class="vinyl-arm playing" id="vinylArm">
-                                <div class="arm-base"></div>
-                                <div class="arm-rod"></div>
-                                <div class="arm-head"></div>
+                            
+                            <!-- Track Info -->
+                            <div class="track-info">
+                                <h3 id="currentTrackTitle">Midnight Cityscape</h3>
+                                <span class="artist">CSSR</span>
+                                
+                                <div class="track-meta">
+                                    <span><i class="far fa-calendar"></i> Nov 2023</span>
+                                    <span><i class="fas fa-headphones"></i> Alt R&B</span>
+                                    <span><i class="far fa-clock"></i> 4:22</span>
+                                </div>
+                                
+                                <p class="track-description" id="currentTrackDescription">A hauntingly beautiful track blending atmospheric synths with raw, emotional vocals.</p>
                             </div>
                         </div>
                         
-                        <!-- Track Info -->
-                        <div class="track-info">
-                            <h3 id="currentTrackTitle">Midnight Cityscape</h3>
-                            <span class="artist">CSSR</span>
-                            
-                            <div class="track-meta">
-                                <span><i class="far fa-calendar"></i> Nov 2023</span>
-                                <span><i class="fas fa-headphones"></i> Alt R&B</span>
-                                <span><i class="far fa-clock"></i> 4:22</span>
-                            </div>
-                            
-                            <p class="track-description" id="currentTrackDescription">A hauntingly beautiful track blending atmospheric synths with raw, emotional vocals.</p>
-                        </div>
-                    </div>
-                    
-                    <!-- Track List with Player Controls on Top -->
-                    <div class="track-list-container">
-                        <div class="track-list-header">
-                            <h3><i class="fas fa-list-music"></i> Tracks</h3>
-                            <div class="track-count" id="trackCount">4 tracks</div>
-                        </div>
-                        
-                        <!-- Player Controls on Top of Tracks -->
-                        <div class="track-list-player-controls">
+                        <!-- Player Controls -->
+                        <div class="player-controls">
                             <div class="control-buttons">
                                 <button class="control-btn active" id="repeatBtn" title="Repeat">
                                     <i class="fas fa-redo"></i>
@@ -879,8 +970,29 @@
                         </div>
                         
                         <!-- Track List -->
-                        <div class="track-list" id="trackList">
-                            <!-- Track items will be populated by JavaScript -->
+                        <div class="track-list-container">
+                            <div class="track-list-header">
+                                <h3><i class="fas fa-list-music"></i> Tracks</h3>
+                                <div class="track-count" id="trackCount">4 tracks</div>
+                            </div>
+                            
+                            <div class="track-list" id="trackList">
+                                <!-- Track items will be populated by JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Right Column: Lyrics Section -->
+                    <div class="lyrics-section">
+                        <div class="lyrics-header">
+                            <h3><i class="fas fa-quote-right"></i> Lyrics</h3>
+                            <div class="lyrics-scroll-indicator">
+                                <i class="fas fa-chevron-down"></i> Scroll
+                            </div>
+                        </div>
+                        
+                        <div class="lyrics-container" id="lyricsContainer">
+                            <!-- Lyrics will be populated by JavaScript -->
                         </div>
                     </div>
                 </div>
@@ -951,7 +1063,7 @@
     </footer>
 
     <script>
-        // Track data
+        // Track data with detailed lyric timings
         const tracks = [
             {
                 id: 1,
@@ -959,6 +1071,38 @@
                 artist: "CSSR",
                 duration: "4:22",
                 description: "A hauntingly beautiful track blending atmospheric synths with raw, emotional vocals.",
+                lyrics: [
+                    {time: 0, text: "Walking through the neon glow"},
+                    {time: 5, text: "In this city that I know"},
+                    {time: 10, text: "Every shadow has a name"},
+                    {time: 15, text: "Every window tells a story"},
+                    {time: 22, text: ""},
+                    {time: 25, text: "Midnight cityscape"},
+                    {time: 30, text: "Whispering my fate"},
+                    {time: 35, text: "In the silence between heartbeats"},
+                    {time: 42, text: "I find my escape"},
+                    {time: 48, text: ""},
+                    {time: 52, text: "Echoes in the empty streets"},
+                    {time: 58, text: "Rhythms in the falling rain"},
+                    {time: 65, text: "Finding beauty in the pain"},
+                    {time: 72, text: "Again and again"}
+                ],
+                wordTimings: [
+                    [{word: "Walking", time: 0}, {word: "through", time: 1}, {word: "the", time: 2}, {word: "neon", time: 2.5}, {word: "glow", time: 3}],
+                    [{word: "In", time: 5}, {word: "this", time: 5.5}, {word: "city", time: 6}, {word: "that", time: 6.5}, {word: "I", time: 7}, {word: "know", time: 7.5}],
+                    [{word: "Every", time: 10}, {word: "shadow", time: 11}, {word: "has", time: 12}, {word: "a", time: 12.5}, {word: "name", time: 13}],
+                    [{word: "Every", time: 15}, {word: "window", time: 16}, {word: "tells", time: 17}, {word: "a", time: 17.5}, {word: "story", time: 18}],
+                    [], // Empty line
+                    [{word: "Midnight", time: 25}, {word: "cityscape", time: 26.5}],
+                    [{word: "Whispering", time: 30}, {word: "my", time: 31.5}, {word: "fate", time: 32.5}],
+                    [{word: "In", time: 35}, {word: "the", time: 35.5}, {word: "silence", time: 36}, {word: "between", time: 37}, {word: "heartbeats", time: 38}],
+                    [{word: "I", time: 42}, {word: "find", time: 42.5}, {word: "my", time: 43}, {word: "escape", time: 43.5}],
+                    [], // Empty line
+                    [{word: "Echoes", time: 52}, {word: "in", time: 53}, {word: "the", time: 53.5}, {word: "empty", time: 54}, {word: "streets", time: 55}],
+                    [{word: "Rhythms", time: 58}, {word: "in", time: 59}, {word: "the", time: 59.5}, {word: "falling", time: 60}, {word: "rain", time: 61}],
+                    [{word: "Finding", time: 65}, {word: "beauty", time: 66}, {word: "in", time: 67}, {word: "the", time: 67.5}, {word: "pain", time: 68}],
+                    [{word: "Again", time: 72}, {word: "and", time: 73}, {word: "again", time: 74}]
+                ],
                 artwork: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
                 artworkTitle: "Midnight Cityscape",
                 artworkDesc: "Visual concept inspired by urban loneliness and neon-lit nights.",
@@ -973,6 +1117,38 @@
                 artist: "CSSR",
                 duration: "3:45",
                 description: "Minimalistic production with layered vocal harmonies. Recorded in a single take.",
+                lyrics: [
+                    {time: 0, text: "In the quiet of my mind"},
+                    {time: 5, text: "Echoes of a different time"},
+                    {time: 10, text: "Whispers that I can't erase"},
+                    {time: 15, text: "Flickers of a hidden face"},
+                    {time: 22, text: ""},
+                    {time: 25, text: "Silence speaks so loud"},
+                    {time: 30, text: "Wrapped in morning's shroud"},
+                    {time: 35, text: "Memories like photographs"},
+                    {time: 40, text: "Fading now"},
+                    {time: 45, text: ""},
+                    {time: 50, text: "Echoes in the silence grow"},
+                    {time: 55, text: "Secrets that I'll never know"},
+                    {time: 62, text: "In the spaces between sounds"},
+                    {time: 68, text: "Lost but never found"}
+                ],
+                wordTimings: [
+                    [{word: "In", time: 0}, {word: "the", time: 0.5}, {word: "quiet", time: 1}, {word: "of", time: 2}, {word: "my", time: 2.5}, {word: "mind", time: 3}],
+                    [{word: "Echoes", time: 5}, {word: "of", time: 6}, {word: "a", time: 6.5}, {word: "different", time: 7}, {word: "time", time: 8}],
+                    [{word: "Whispers", time: 10}, {word: "that", time: 11}, {word: "I", time: 11.5}, {word: "can't", time: 12}, {word: "erase", time: 13}],
+                    [{word: "Flickers", time: 15}, {word: "of", time: 16}, {word: "a", time: 16.5}, {word: "hidden", time: 17}, {word: "face", time: 18}],
+                    [],
+                    [{word: "Silence", time: 25}, {word: "speaks", time: 26}, {word: "so", time: 27}, {word: "loud", time: 28}],
+                    [{word: "Wrapped", time: 30}, {word: "in", time: 31}, {word: "morning's", time: 31.5}, {word: "shroud", time: 33}],
+                    [{word: "Memories", time: 35}, {word: "like", time: 36}, {word: "photographs", time: 37}],
+                    [{word: "Fading", time: 40}, {word: "now", time: 41}],
+                    [],
+                    [{word: "Echoes", time: 50}, {word: "in", time: 51}, {word: "the", time: 51.5}, {word: "silence", time: 52}, {word: "grow", time: 53}],
+                    [{word: "Secrets", time: 55}, {word: "that", time: 56}, {word: "I'll", time: 56.5}, {word: "never", time: 57}, {word: "know", time: 58}],
+                    [{word: "In", time: 62}, {word: "the", time: 62.5}, {word: "spaces", time: 63}, {word: "between", time: 64}, {word: "sounds", time: 65}],
+                    [{word: "Lost", time: 68}, {word: "but", time: 69}, {word: "never", time: 70}, {word: "found", time: 71}]
+                ],
                 artwork: "https://images.unsplash.com/photo-1511379938547-c1f69419868d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
                 artworkTitle: "Echoes in Silence",
                 artworkDesc: "Abstract representation of sound waves and silence.",
@@ -987,6 +1163,38 @@
                 artist: "CSSR",
                 duration: "5:18",
                 description: "Sunset-inspired track with ethereal vocals and warm instrumentation.",
+                lyrics: [
+                    {time: 0, text: "Golden hour fading fast"},
+                    {time: 5, text: "Shadows growing, light won't last"},
+                    {time: 12, text: "Capture this before it's gone"},
+                    {time: 18, text: "This moment we're holding on"},
+                    {time: 25, text: ""},
+                    {time: 30, text: "Everything is bathed in gold"},
+                    {time: 36, text: "A story waiting to be told"},
+                    {time: 42, text: "In the dying of the light"},
+                    {time: 48, text: "Everything feels right"},
+                    {time: 54, text: ""},
+                    {time: 60, text: "Your silhouette against the sun"},
+                    {time: 66, text: "This day is done, but we've just begun"},
+                    {time: 74, text: "Golden hour slips away"},
+                    {time: 80, text: "But in my heart it's here to stay"}
+                ],
+                wordTimings: [
+                    [{word: "Golden", time: 0}, {word: "hour", time: 1}, {word: "fading", time: 2}, {word: "fast", time: 3}],
+                    [{word: "Shadows", time: 5}, {word: "growing", time: 6.5}, {word: "light", time: 8}, {word: "won't", time: 9}, {word: "last", time: 10}],
+                    [{word: "Capture", time: 12}, {word: "this", time: 13}, {word: "before", time: 14}, {word: "it's", time: 15}, {word: "gone", time: 16}],
+                    [{word: "This", time: 18}, {word: "moment", time: 19}, {word: "we're", time: 20}, {word: "holding", time: 20.5}, {word: "on", time: 21}],
+                    [],
+                    [{word: "Everything", time: 30}, {word: "is", time: 31.5}, {word: "bathed", time: 32}, {word: "in", time: 33}, {word: "gold", time: 34}],
+                    [{word: "A", time: 36}, {word: "story", time: 36.5}, {word: "waiting", time: 37.5}, {word: "to", time: 38.5}, {word: "be", time: 39}, {word: "told", time: 40}],
+                    [{word: "In", time: 42}, {word: "the", time: 42.5}, {word: "dying", time: 43}, {word: "of", time: 44}, {word: "the", time: 44.5}, {word: "light", time: 45}],
+                    [{word: "Everything", time: 48}, {word: "feels", time: 49.5}, {word: "right", time: 50.5}],
+                    [],
+                    [{word: "Your", time: 60}, {word: "silhouette", time: 61}, {word: "against", time: 62.5}, {word: "the", time: 63.5}, {word: "sun", time: 64.5}],
+                    [{word: "This", time: 66}, {word: "day", time: 66.5}, {word: "is", time: 67}, {word: "done", time: 67.5}, {word: "but", time: 68.5}, {word: "we've", time: 69}, {word: "just", time: 69.5}, {word: "begun", time: 70.5}],
+                    [{word: "Golden", time: 74}, {word: "hour", time: 75}, {word: "slips", time: 76}, {word: "away", time: 77}],
+                    [{word: "But", time: 80}, {word: "in", time: 80.5}, {word: "my", time: 81}, {word: "heart", time: 81.5}, {word: "it's", time: 82.5}, {word: "here", time: 83}, {word: "to", time: 83.5}, {word: "stay", time: 84.5}]
+                ],
                 artwork: "https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1469&q=80",
                 artworkTitle: "Golden Hour",
                 artworkDesc: "Captured during actual golden hour in Malibu.",
@@ -994,20 +1202,6 @@
                 genre: "Indie Folk",
                 plays: 15678,
                 addedDate: "2023-10-22"
-            },
-            {
-                id: 4,
-                title: "Neon Dreams",
-                artist: "CSSR",
-                duration: "4:05",
-                description: "Upbeat synth-pop track with nostalgic 80s influences and modern production.",
-                artwork: "https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
-                artworkTitle: "Neon Dreams",
-                artworkDesc: "Digital neon art inspired by cyberpunk aesthetics.",
-                releaseDate: "Sep 2023",
-                genre: "Synth-pop",
-                plays: 21034,
-                addedDate: "2023-09-15"
             }
         ];
 
@@ -1018,6 +1212,8 @@
         let isShuffling = false;
         let currentTime = 0; // Current time in seconds
         let totalTime = 262; // 4:22 in seconds
+        let wordElements = []; // Store all word elements for highlighting
+        let lyricLineElements = []; // Store all line elements
 
         // DOM Elements
         const vinylDisk = document.getElementById('vinylDisk');
@@ -1032,6 +1228,7 @@
         const currentTimeDisplay = document.getElementById('currentTime');
         const totalTimeDisplay = document.getElementById('totalTime');
         const trackList = document.getElementById('trackList');
+        const lyricsContainer = document.getElementById('lyricsContainer');
         const artworkImage = document.getElementById('artworkImage');
         const artworkTitle = document.getElementById('artworkTitle');
         const artworkDescription = document.getElementById('artworkDescription');
@@ -1096,6 +1293,9 @@
             currentTrackTitle.textContent = track.title;
             currentTrackDescription.textContent = track.description;
             
+            // Update lyrics
+            renderLyrics(track);
+            
             // Update artwork
             artworkImage.src = track.artwork;
             artworkTitle.textContent = track.artworkTitle;
@@ -1117,6 +1317,88 @@
                     item.classList.remove('active');
                 }
             });
+        }
+
+        // Render lyrics with word-by-word highlighting capability
+        function renderLyrics(track) {
+            lyricsContainer.innerHTML = '';
+            wordElements = [];
+            lyricLineElements = [];
+            
+            track.lyrics.forEach((line, lineIndex) => {
+                const lineDiv = document.createElement('div');
+                lineDiv.className = 'lyrics-line';
+                lineDiv.id = `line-${lineIndex}`;
+                
+                if (line.text === '') {
+                    // Empty line for spacing
+                    lineDiv.innerHTML = '<br>';
+                } else {
+                    // Create word elements for each word in the line
+                    const words = track.wordTimings[lineIndex];
+                    words.forEach((wordObj, wordIndex) => {
+                        const wordSpan = document.createElement('span');
+                        wordSpan.className = 'lyrics-word';
+                        wordSpan.textContent = wordObj.word + ' ';
+                        wordSpan.dataset.time = wordObj.time;
+                        wordSpan.dataset.lineIndex = lineIndex;
+                        wordSpan.dataset.wordIndex = wordIndex;
+                        
+                        wordElements.push({
+                            element: wordSpan,
+                            time: wordObj.time,
+                            lineIndex: lineIndex,
+                            wordIndex: wordIndex
+                        });
+                        
+                        lineDiv.appendChild(wordSpan);
+                    });
+                }
+                
+                lyricsContainer.appendChild(lineDiv);
+                lyricLineElements.push(lineDiv);
+            });
+        }
+
+        // Update lyrics highlighting based on current time
+        function updateLyricsHighlight() {
+            // Remove active class from all words
+            wordElements.forEach(item => {
+                item.element.classList.remove('active');
+            });
+            
+            // Remove active-line class from all lines
+            lyricLineElements.forEach(line => {
+                line.classList.remove('active-line');
+            });
+            
+            // Find the current word based on time
+            let currentWord = null;
+            for (let i = wordElements.length - 1; i >= 0; i--) {
+                if (wordElements[i].time <= currentTime) {
+                    currentWord = wordElements[i];
+                    break;
+                }
+            }
+            
+            // Highlight the current word
+            if (currentWord) {
+                currentWord.element.classList.add('active');
+                
+                // Highlight the current line
+                const currentLine = lyricLineElements[currentWord.lineIndex];
+                if (currentLine) {
+                    currentLine.classList.add('active-line');
+                    
+                    // Scroll to the current line
+                    const container = lyricsContainer;
+                    const lineTop = currentLine.offsetTop;
+                    const containerHeight = container.clientHeight;
+                    const lineHeight = currentLine.offsetHeight;
+                    
+                    container.scrollTop = lineTop - containerHeight / 2 + lineHeight / 2;
+                }
+            }
         }
 
         // Select a track
@@ -1195,6 +1477,9 @@
             
             // Update time display
             currentTimeDisplay.textContent = formatTime(currentTime);
+            
+            // Update lyrics highlighting
+            updateLyricsHighlight();
         }
 
         // Simulate progress (in a real app, this would be tied to actual audio)
