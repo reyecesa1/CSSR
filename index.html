@@ -387,9 +387,105 @@
             color: rgba(245, 241, 230, 0.7);
         }
 
-        /* Track List Below Player Controls */
+        /* Right Column: Lyrics + Tracks */
+        .lyrics-tracks-column {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        /* Compact Lyrics Section */
+        .lyrics-section {
+            background-color: var(--gray);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            margin-bottom: 20px;
+            flex-shrink: 0;
+        }
+
+        .lyrics-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .lyrics-header h3 {
+            font-size: 18px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .lyrics-header h3 i {
+            color: var(--accent);
+        }
+
+        .lyrics-scroll-indicator {
+            background-color: var(--light-gray);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            color: rgba(245, 241, 230, 0.7);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .lyrics-container {
+            height: 150px;
+            overflow-y: auto;
+            padding-right: 10px;
+            line-height: 1.6;
+        }
+
+        .lyrics-container::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        .lyrics-container::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+        }
+
+        .lyrics-container::-webkit-scrollbar-thumb {
+            background: var(--accent);
+            border-radius: 10px;
+        }
+
+        .lyrics-line {
+            margin-bottom: 12px;
+            color: rgba(245, 241, 230, 0.8);
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .lyrics-word {
+            transition: all 0.3s;
+            display: inline-block;
+            padding: 0 2px;
+        }
+
+        .lyrics-word.active {
+            color: var(--accent);
+            text-shadow: 0 0 8px var(--accent-glow), 0 0 15px var(--accent-glow);
+            transform: scale(1.05);
+            font-weight: 600;
+        }
+
+        .lyrics-line.active-line {
+            color: var(--offwhite);
+        }
+
+        /* Track List Below Lyrics */
         .track-list-container {
-            margin-top: 20px;
+            background-color: var(--gray);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            flex-grow: 1;
         }
 
         .track-list-header {
@@ -420,7 +516,7 @@
         }
 
         .track-list {
-            max-height: 280px;
+            height: 200px;
             overflow-y: auto;
             padding-right: 10px;
         }
@@ -486,92 +582,6 @@
         .track-duration {
             font-size: 12px;
             color: rgba(245, 241, 230, 0.7);
-        }
-
-        /* Right Column: Lyrics Section */
-        .lyrics-section {
-            background-color: var(--gray);
-            border-radius: 16px;
-            padding: 25px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .lyrics-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .lyrics-header h3 {
-            font-size: 18px;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .lyrics-header h3 i {
-            color: var(--accent);
-        }
-
-        .lyrics-scroll-indicator {
-            background-color: var(--light-gray);
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 12px;
-            color: rgba(245, 241, 230, 0.7);
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .lyrics-container {
-            flex-grow: 1;
-            overflow-y: auto;
-            padding-right: 10px;
-            line-height: 1.8;
-        }
-
-        .lyrics-container::-webkit-scrollbar {
-            width: 5px;
-        }
-
-        .lyrics-container::-webkit-scrollbar-track {
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 10px;
-        }
-
-        .lyrics-container::-webkit-scrollbar-thumb {
-            background: var(--accent);
-            border-radius: 10px;
-        }
-
-        .lyrics-line {
-            margin-bottom: 15px;
-            color: rgba(245, 241, 230, 0.8);
-            font-size: 16px;
-            transition: all 0.3s;
-        }
-
-        .lyrics-word {
-            transition: all 0.3s;
-            display: inline-block;
-            padding: 0 2px;
-        }
-
-        .lyrics-word.active {
-            color: var(--accent);
-            text-shadow: 0 0 10px var(--accent-glow), 0 0 20px var(--accent-glow);
-            transform: scale(1.05);
-            font-weight: 600;
-        }
-
-        .lyrics-line.active-line {
-            color: var(--offwhite);
         }
 
         /* Bottom Sections Grid */
@@ -750,8 +760,12 @@
                 gap: 20px;
             }
             
-            .lyrics-section {
-                min-height: 400px;
+            .lyrics-container {
+                height: 140px;
+            }
+            
+            .track-list {
+                height: 180px;
             }
         }
 
@@ -796,6 +810,11 @@
                 height: 45px;
                 font-size: 18px;
             }
+            
+            .lyrics-line {
+                font-size: 13px;
+                margin-bottom: 10px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -821,8 +840,12 @@
                 height: 140px;
             }
             
-            .lyrics-line {
-                font-size: 14px;
+            .lyrics-container {
+                height: 130px;
+            }
+            
+            .track-list {
+                height: 160px;
             }
         }
 
@@ -907,7 +930,7 @@
                 </div>
                 
                 <div class="player-body">
-                    <!-- Left Column: Vinyl Player + Player Controls + Track List -->
+                    <!-- Left Column: Vinyl Player + Player Controls -->
                     <div class="vinyl-player-column">
                         <!-- Vinyl Player -->
                         <div class="vinyl-player">
@@ -968,6 +991,23 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    
+                    <!-- Right Column: Lyrics + Tracks -->
+                    <div class="lyrics-tracks-column">
+                        <!-- Compact Lyrics Section -->
+                        <section class="lyrics-section">
+                            <div class="lyrics-header">
+                                <h3><i class="fas fa-quote-right"></i> Lyrics</h3>
+                                <div class="lyrics-scroll-indicator">
+                                    <i class="fas fa-chevron-down"></i> Scroll
+                                </div>
+                            </div>
+                            
+                            <div class="lyrics-container" id="lyricsContainer">
+                                <!-- Lyrics will be populated by JavaScript -->
+                            </div>
+                        </section>
                         
                         <!-- Track List -->
                         <div class="track-list-container">
@@ -979,20 +1019,6 @@
                             <div class="track-list" id="trackList">
                                 <!-- Track items will be populated by JavaScript -->
                             </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Right Column: Lyrics Section -->
-                    <div class="lyrics-section">
-                        <div class="lyrics-header">
-                            <h3><i class="fas fa-quote-right"></i> Lyrics</h3>
-                            <div class="lyrics-scroll-indicator">
-                                <i class="fas fa-chevron-down"></i> Scroll
-                            </div>
-                        </div>
-                        
-                        <div class="lyrics-container" id="lyricsContainer">
-                            <!-- Lyrics will be populated by JavaScript -->
                         </div>
                     </div>
                 </div>
