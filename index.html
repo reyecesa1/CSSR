@@ -1,0 +1,1291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSSR | EXPRESS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --black: #0a0a0a;
+            --offwhite: #f5f1e6;
+            --accent: #ff375f;
+            --accent-glow: rgba(255, 55, 95, 0.6);
+            --gray: #1a1a1a;
+            --light-gray: #2a2a2a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--black);
+            color: var(--offwhite);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            width: 100%;
+        }
+
+        /* Compact Header */
+        header {
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(245, 241, 230, 0.1);
+            position: sticky;
+            top: 0;
+            background-color: rgba(10, 10, 10, 0.98);
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: var(--offwhite);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        .logo-icon {
+            color: var(--accent);
+            font-size: 20px;
+        }
+
+        .user-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .early-access-badge {
+            background: linear-gradient(90deg, var(--accent), #ff6b9d);
+            color: var(--offwhite);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 12px;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 15px rgba(255, 55, 95, 0.3);
+        }
+
+        /* Main Content - Compact Layout */
+        .main-content {
+            flex: 1;
+            padding: 20px 0;
+        }
+
+        /* Combined Player Section - Compact */
+        .player-section {
+            background-color: var(--gray);
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            margin-bottom: 25px;
+        }
+
+        .player-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .player-header h2 {
+            font-size: 20px;
+            color: var(--offwhite);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .player-header h2 i {
+            color: var(--accent);
+        }
+
+        .player-body {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        /* Compact Vinyl Player */
+        .vinyl-player {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .vinyl-container {
+            position: relative;
+            width: 240px;
+            height: 240px;
+            margin-bottom: 20px;
+        }
+
+        .vinyl-disk {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: radial-gradient(circle at 50% 50%, #111 10%, #000 70%);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.8);
+            transition: transform 0.5s ease;
+        }
+
+        .vinyl-disk.playing {
+            animation: spin 10s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .vinyl-label {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), #ff6b9d);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--black);
+            font-weight: 900;
+            font-size: 16px;
+            z-index: 2;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .vinyl-lines {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: repeating-radial-gradient(
+                circle at 50% 50%,
+                transparent,
+                transparent 10px,
+                rgba(255, 255, 255, 0.03) 10px,
+                rgba(255, 255, 255, 0.03) 20px
+            );
+        }
+
+        .vinyl-arm {
+            position: absolute;
+            top: -25px;
+            right: -10px;
+            width: 100px;
+            height: 130px;
+            transform-origin: 15px 15px;
+            transform: rotate(-30deg);
+            transition: transform 0.8s ease;
+            z-index: 3;
+        }
+
+        .vinyl-arm.playing {
+            transform: rotate(-15deg);
+        }
+
+        .arm-base {
+            width: 30px;
+            height: 30px;
+            background-color: #333;
+            border-radius: 50%;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .arm-rod {
+            width: 5px;
+            height: 110px;
+            background-color: #555;
+            position: absolute;
+            top: 15px;
+            left: 12px;
+            border-radius: 3px;
+        }
+
+        .arm-head {
+            width: 16px;
+            height: 16px;
+            background-color: #222;
+            border-radius: 50%;
+            position: absolute;
+            bottom: 0;
+            left: -5px;
+        }
+
+        /* Compact Track Info */
+        .track-info {
+            margin-top: 10px;
+            text-align: center;
+            width: 100%;
+        }
+
+        .track-info h3 {
+            font-size: 22px;
+            margin-bottom: 5px;
+            font-weight: 700;
+            color: var(--offwhite);
+            font-family: 'Space Grotesk', sans-serif;
+            line-height: 1.2;
+        }
+
+        .track-info .artist {
+            font-size: 16px;
+            color: var(--accent);
+            margin-bottom: 12px;
+            display: block;
+            font-weight: 600;
+        }
+
+        .track-meta {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 15px;
+            color: rgba(245, 241, 230, 0.7);
+            font-size: 13px;
+        }
+
+        .track-meta span {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .track-description {
+            font-size: 14px;
+            color: rgba(245, 241, 230, 0.8);
+            line-height: 1.5;
+            max-width: 350px;
+            margin: 0 auto;
+        }
+
+        /* Track List with Player Controls on Top */
+        .track-list-container {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .track-list-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .track-list-header h3 {
+            font-size: 18px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .track-list-header h3 i {
+            color: var(--accent);
+        }
+
+        .track-count {
+            background-color: var(--light-gray);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            color: rgba(245, 241, 230, 0.7);
+        }
+
+        /* Player Controls on Top of Track List */
+        .track-list-player-controls {
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .control-buttons {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 12px;
+        }
+
+        .control-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(0, 0, 0, 0.3);
+            border: none;
+            color: var(--offwhite);
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .control-btn:hover {
+            background-color: var(--accent);
+            color: var(--black);
+        }
+
+        .control-btn.active {
+            background-color: var(--accent);
+            color: var(--black);
+        }
+
+        .control-btn.play-pause {
+            width: 45px;
+            height: 45px;
+            font-size: 16px;
+            background-color: var(--accent);
+            color: var(--black);
+        }
+
+        .control-btn.play-pause:hover {
+            transform: scale(1.05);
+        }
+
+        .progress-container {
+            width: 100%;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 2px;
+            position: relative;
+            cursor: pointer;
+            margin-bottom: 8px;
+        }
+
+        .progress {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), #ff6b9d);
+            border-radius: 2px;
+            width: 30%;
+        }
+
+        .time-display {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: rgba(245, 241, 230, 0.7);
+        }
+
+        /* Track List */
+        .track-list {
+            flex-grow: 1;
+            overflow-y: auto;
+            max-height: 280px;
+            padding-right: 10px;
+        }
+
+        .track-list::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        .track-list::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+        }
+
+        .track-list::-webkit-scrollbar-thumb {
+            background: var(--accent);
+            border-radius: 10px;
+        }
+
+        .track-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            background-color: var(--light-gray);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 8px;
+        }
+
+        .track-item:hover {
+            background-color: rgba(255, 55, 95, 0.1);
+            transform: translateX(3px);
+        }
+
+        .track-item.active {
+            background-color: rgba(255, 55, 95, 0.15);
+            border-left: 3px solid var(--accent);
+        }
+
+        .track-number {
+            width: 25px;
+            font-weight: 700;
+            color: var(--accent);
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 14px;
+        }
+
+        .track-details {
+            flex-grow: 1;
+        }
+
+        .track-details h4 {
+            font-size: 14px;
+            margin-bottom: 3px;
+            font-weight: 600;
+        }
+
+        .track-details p {
+            font-size: 12px;
+            color: rgba(245, 241, 230, 0.7);
+        }
+
+        .track-duration {
+            font-size: 12px;
+            color: rgba(245, 241, 230, 0.7);
+        }
+
+        /* Bottom Sections Grid */
+        .bottom-sections {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+
+        .artwork-section, .early-access-section {
+            background-color: var(--gray);
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .section-title {
+            font-size: 18px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+        }
+
+        .section-title i {
+            color: var(--accent);
+        }
+
+        .artwork-display {
+            width: 100%;
+            height: 180px;
+            background-color: var(--light-gray);
+            border-radius: 10px;
+            margin-bottom: 15px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .artwork-display img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .artwork-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            padding: 12px;
+            color: white;
+            font-size: 14px;
+        }
+
+        .artwork-overlay div:first-child {
+            font-weight: 600;
+        }
+
+        .artwork-overlay div:last-child {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+
+        .artwork-description {
+            font-size: 13px;
+            color: rgba(245, 241, 230, 0.8);
+            line-height: 1.5;
+        }
+
+        .early-access-content p {
+            margin-bottom: 15px;
+            color: rgba(245, 241, 230, 0.8);
+            font-size: 14px;
+        }
+
+        .countdown {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .countdown-item {
+            text-align: center;
+            background-color: var(--light-gray);
+            padding: 12px;
+            border-radius: 8px;
+            flex: 1;
+        }
+
+        .countdown-value {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--accent);
+            display: block;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .countdown-label {
+            font-size: 11px;
+            color: rgba(245, 241, 230, 0.7);
+            margin-top: 5px;
+            display: block;
+        }
+
+        .btn {
+            background: linear-gradient(90deg, var(--accent), #ff6b9d);
+            color: var(--offwhite);
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 55, 95, 0.4);
+        }
+
+        /* Compact Footer */
+        footer {
+            border-top: 1px solid rgba(245, 241, 230, 0.1);
+            padding: 25px 0;
+            text-align: center;
+            color: rgba(245, 241, 230, 0.6);
+            font-size: 13px;
+            margin-top: 20px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 15px;
+        }
+
+        .footer-links a {
+            color: rgba(245, 241, 230, 0.6);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-size: 13px;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        .copyright {
+            margin-top: 8px;
+            font-size: 11px;
+            opacity: 0.5;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .player-body {
+                grid-template-columns: 1fr;
+                gap: 25px;
+            }
+            
+            .vinyl-container {
+                width: 220px;
+                height: 220px;
+            }
+            
+            .bottom-sections {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 15px;
+            }
+            
+            .player-section {
+                padding: 20px;
+            }
+            
+            .vinyl-container {
+                width: 200px;
+                height: 200px;
+            }
+            
+            .track-info h3 {
+                font-size: 20px;
+            }
+            
+            .artwork-display {
+                height: 160px;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .track-list-player-controls {
+                padding: 12px;
+            }
+            
+            .control-btn {
+                width: 36px;
+                height: 36px;
+                font-size: 13px;
+            }
+            
+            .control-btn.play-pause {
+                width: 40px;
+                height: 40px;
+                font-size: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 20px;
+            }
+            
+            .early-access-badge {
+                padding: 5px 10px;
+                font-size: 11px;
+            }
+            
+            .player-section {
+                padding: 15px;
+            }
+            
+            .vinyl-container {
+                width: 180px;
+                height: 180px;
+            }
+            
+            .artwork-display {
+                height: 140px;
+            }
+        }
+
+        /* Compact Hero */
+        .hero {
+            padding: 40px 0 30px;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 30% 20%, rgba(255, 55, 95, 0.1) 0%, transparent 50%);
+            z-index: -1;
+        }
+
+        .hero h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 48px;
+            margin-bottom: 10px;
+            font-weight: 700;
+            line-height: 1;
+            letter-spacing: -0.5px;
+        }
+
+        .hero p {
+            font-size: 16px;
+            max-width: 600px;
+            margin: 0 auto 25px;
+            color: rgba(245, 241, 230, 0.8);
+        }
+
+        .hero-subtitle {
+            font-size: 14px;
+            color: var(--accent);
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Compact Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="#" class="logo">
+                    <i class="fas fa-broadcast-tower logo-icon"></i>
+                    <span>CSSR</span> EXPRESS
+                </a>
+                
+                <div class="user-actions">
+                    <span class="early-access-badge">EARLY ACCESS</span>
+                    <i class="fas fa-user-circle" style="font-size: 22px; cursor: pointer;"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Compact Hero -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-subtitle">CSSR PRESENTS</div>
+            <h1>EXPRESS</h1>
+            <p>Exclusive platform for unreleased tracks. Welcome to the creative hub.</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="container">
+            <!-- Combined Player Section -->
+            <section class="player-section">
+                <div class="player-header">
+                    <h2><i class="fas fa-play-circle"></i> Player</h2>
+                </div>
+                
+                <div class="player-body">
+                    <!-- Vinyl Player -->
+                    <div class="vinyl-player">
+                        <div class="vinyl-container">
+                            <div class="vinyl-disk playing" id="vinylDisk">
+                                <div class="vinyl-label">CSSR</div>
+                                <div class="vinyl-lines"></div>
+                            </div>
+                            <div class="vinyl-arm playing" id="vinylArm">
+                                <div class="arm-base"></div>
+                                <div class="arm-rod"></div>
+                                <div class="arm-head"></div>
+                            </div>
+                        </div>
+                        
+                        <!-- Track Info -->
+                        <div class="track-info">
+                            <h3 id="currentTrackTitle">Midnight Cityscape</h3>
+                            <span class="artist">CSSR</span>
+                            
+                            <div class="track-meta">
+                                <span><i class="far fa-calendar"></i> Nov 2023</span>
+                                <span><i class="fas fa-headphones"></i> Alt R&B</span>
+                                <span><i class="far fa-clock"></i> 4:22</span>
+                            </div>
+                            
+                            <p class="track-description" id="currentTrackDescription">A hauntingly beautiful track blending atmospheric synths with raw, emotional vocals.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Track List with Player Controls on Top -->
+                    <div class="track-list-container">
+                        <div class="track-list-header">
+                            <h3><i class="fas fa-list-music"></i> Tracks</h3>
+                            <div class="track-count" id="trackCount">4 tracks</div>
+                        </div>
+                        
+                        <!-- Player Controls on Top of Tracks -->
+                        <div class="track-list-player-controls">
+                            <div class="control-buttons">
+                                <button class="control-btn active" id="repeatBtn" title="Repeat">
+                                    <i class="fas fa-redo"></i>
+                                </button>
+                                <button class="control-btn" id="prevBtn" title="Previous">
+                                    <i class="fas fa-step-backward"></i>
+                                </button>
+                                <button class="control-btn play-pause" id="playPauseBtn" title="Play/Pause">
+                                    <i class="fas fa-pause"></i>
+                                </button>
+                                <button class="control-btn" id="nextBtn" title="Next">
+                                    <i class="fas fa-step-forward"></i>
+                                </button>
+                                <button class="control-btn" id="shuffleBtn" title="Shuffle">
+                                    <i class="fas fa-random"></i>
+                                </button>
+                            </div>
+                            
+                            <div class="progress-container">
+                                <div class="progress-bar" id="progressBar">
+                                    <div class="progress" id="progress"></div>
+                                </div>
+                                <div class="time-display">
+                                    <span id="currentTime">2:15</span>
+                                    <span id="totalTime">4:22</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Track List -->
+                        <div class="track-list" id="trackList">
+                            <!-- Track items will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Bottom Sections -->
+            <div class="bottom-sections">
+                <!-- Artwork Section -->
+                <section class="artwork-section">
+                    <h3 class="section-title"><i class="fas fa-palette"></i> Artwork</h3>
+                    
+                    <div class="artwork-display">
+                        <img id="artworkImage" src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Album Artwork">
+                        <div class="artwork-overlay">
+                            <div id="artworkTitle">Midnight Cityscape</div>
+                            <div id="artworkArtist">CSSR</div>
+                        </div>
+                    </div>
+                    
+                    <p class="artwork-description" id="artworkDescription">Visual concept inspired by urban loneliness and neon-lit nights.</p>
+                </section>
+                
+                <!-- Early Access Section -->
+                <section class="early-access-section">
+                    <h3 class="section-title"><i class="fas fa-star"></i> Next Release</h3>
+                    
+                    <div class="early-access-content">
+                        <p><strong>"Echoes in Silence"</strong> drops in:</p>
+                        
+                        <div class="countdown">
+                            <div class="countdown-item">
+                                <span class="countdown-value" id="days">14</span>
+                                <span class="countdown-label">DAYS</span>
+                            </div>
+                            <div class="countdown-item">
+                                <span class="countdown-value" id="hours">06</span>
+                                <span class="countdown-label">HOURS</span>
+                            </div>
+                            <div class="countdown-item">
+                                <span class="countdown-value" id="minutes">32</span>
+                                <span class="countdown-label">MINUTES</span>
+                            </div>
+                        </div>
+                        
+                        <p>Early access available 48 hours before public release.</p>
+                        
+                        <button class="btn" id="notifyBtn">
+                            <i class="fas fa-bell"></i> NOTIFY ME
+                        </button>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <!-- Compact Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="#">Privacy</a>
+                <a href="#">Terms</a>
+                <a href="#">Artist Portal</a>
+                <a href="#">Contact</a>
+            </div>
+            <p>&copy; 2023 CSSR EXPRESS. All rights reserved.</p>
+            <p class="copyright">Exclusive platform for verified fans.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Track data
+        const tracks = [
+            {
+                id: 1,
+                title: "Midnight Cityscape",
+                artist: "CSSR",
+                duration: "4:22",
+                description: "A hauntingly beautiful track blending atmospheric synths with raw, emotional vocals.",
+                artwork: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+                artworkTitle: "Midnight Cityscape",
+                artworkDesc: "Visual concept inspired by urban loneliness and neon-lit nights.",
+                releaseDate: "Nov 2023",
+                genre: "Alternative R&B",
+                plays: 12543,
+                addedDate: "2023-11-15"
+            },
+            {
+                id: 2,
+                title: "Echoes in Silence",
+                artist: "CSSR",
+                duration: "3:45",
+                description: "Minimalistic production with layered vocal harmonies. Recorded in a single take.",
+                artwork: "https://images.unsplash.com/photo-1511379938547-c1f69419868d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+                artworkTitle: "Echoes in Silence",
+                artworkDesc: "Abstract representation of sound waves and silence.",
+                releaseDate: "Coming Soon",
+                genre: "Ambient Pop",
+                plays: 8942,
+                addedDate: "2023-11-10"
+            },
+            {
+                id: 3,
+                title: "Golden Hour",
+                artist: "CSSR",
+                duration: "5:18",
+                description: "Sunset-inspired track with ethereal vocals and warm instrumentation.",
+                artwork: "https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1469&q=80",
+                artworkTitle: "Golden Hour",
+                artworkDesc: "Captured during actual golden hour in Malibu.",
+                releaseDate: "Oct 2023",
+                genre: "Indie Folk",
+                plays: 15678,
+                addedDate: "2023-10-22"
+            },
+            {
+                id: 4,
+                title: "Neon Dreams",
+                artist: "CSSR",
+                duration: "4:05",
+                description: "Upbeat synth-pop track with nostalgic 80s influences and modern production.",
+                artwork: "https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+                artworkTitle: "Neon Dreams",
+                artworkDesc: "Digital neon art inspired by cyberpunk aesthetics.",
+                releaseDate: "Sep 2023",
+                genre: "Synth-pop",
+                plays: 21034,
+                addedDate: "2023-09-15"
+            }
+        ];
+
+        // Player state
+        let currentTrackIndex = 0;
+        let isPlaying = true;
+        let isRepeating = true;
+        let isShuffling = false;
+        let currentTime = 0; // Current time in seconds
+        let totalTime = 262; // 4:22 in seconds
+
+        // DOM Elements
+        const vinylDisk = document.getElementById('vinylDisk');
+        const vinylArm = document.getElementById('vinylArm');
+        const playPauseBtn = document.getElementById('playPauseBtn');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const repeatBtn = document.getElementById('repeatBtn');
+        const shuffleBtn = document.getElementById('shuffleBtn');
+        const progress = document.getElementById('progress');
+        const progressBar = document.getElementById('progressBar');
+        const currentTimeDisplay = document.getElementById('currentTime');
+        const totalTimeDisplay = document.getElementById('totalTime');
+        const trackList = document.getElementById('trackList');
+        const artworkImage = document.getElementById('artworkImage');
+        const artworkTitle = document.getElementById('artworkTitle');
+        const artworkDescription = document.getElementById('artworkDescription');
+        const currentTrackTitle = document.getElementById('currentTrackTitle');
+        const currentTrackDescription = document.getElementById('currentTrackDescription');
+        const notifyBtn = document.getElementById('notifyBtn');
+        const trackCount = document.getElementById('trackCount');
+
+        // Initialize the player
+        function initPlayer() {
+            // Populate track list
+            renderTrackList();
+            
+            // Load first track
+            loadTrack(currentTrackIndex);
+            
+            // Start progress simulation
+            simulateProgress();
+            
+            // Set up event listeners
+            setupEventListeners();
+            
+            // Initialize countdown
+            updateCountdown();
+        }
+
+        // Render track list
+        function renderTrackList() {
+            trackList.innerHTML = '';
+            
+            // Update track count
+            trackCount.textContent = `${tracks.length} tracks`;
+            
+            // Render tracks
+            tracks.forEach((track, index) => {
+                const isActive = index === currentTrackIndex;
+                
+                const trackItem = document.createElement('div');
+                trackItem.className = `track-item ${isActive ? 'active' : ''}`;
+                trackItem.innerHTML = `
+                    <div class="track-number">${index + 1}</div>
+                    <div class="track-details">
+                        <h4>${track.title}</h4>
+                        <p>${track.artist} • ${track.plays.toLocaleString()} plays</p>
+                    </div>
+                    <div class="track-duration">${track.duration}</div>
+                `;
+                
+                trackItem.addEventListener('click', () => {
+                    selectTrack(index);
+                });
+                
+                trackList.appendChild(trackItem);
+            });
+        }
+
+        // Load a track by index
+        function loadTrack(index) {
+            const track = tracks[index];
+            
+            // Update player display
+            currentTrackTitle.textContent = track.title;
+            currentTrackDescription.textContent = track.description;
+            
+            // Update artwork
+            artworkImage.src = track.artwork;
+            artworkTitle.textContent = track.artworkTitle;
+            artworkDescription.textContent = track.artworkDesc;
+            
+            // Update time display
+            totalTime = parseTimeToSeconds(track.duration);
+            totalTimeDisplay.textContent = track.duration;
+            
+            // Reset progress
+            currentTime = 0;
+            updateProgress();
+            
+            // Update active track in list
+            document.querySelectorAll('.track-item').forEach((item, i) => {
+                if (i === index) {
+                    item.classList.add('active');
+                } else {
+                    item.classList.remove('active');
+                }
+            });
+        }
+
+        // Select a track
+        function selectTrack(index) {
+            currentTrackIndex = index;
+            loadTrack(index);
+            
+            // If player was paused, start playing
+            if (!isPlaying) {
+                togglePlayPause();
+            }
+        }
+
+        // Toggle play/pause
+        function togglePlayPause() {
+            isPlaying = !isPlaying;
+            
+            if (isPlaying) {
+                playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                vinylDisk.classList.add('playing');
+                vinylArm.classList.add('playing');
+            } else {
+                playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+                vinylDisk.classList.remove('playing');
+                vinylArm.classList.remove('playing');
+            }
+        }
+
+        // Play next track
+        function playNext() {
+            if (isShuffling) {
+                // Play random track (but not the same one)
+                let newIndex;
+                do {
+                    newIndex = Math.floor(Math.random() * tracks.length);
+                } while (newIndex === currentTrackIndex && tracks.length > 1);
+                
+                currentTrackIndex = newIndex;
+            } else {
+                // Play next in order
+                currentTrackIndex = (currentTrackIndex + 1) % tracks.length;
+            }
+            
+            loadTrack(currentTrackIndex);
+        }
+
+        // Play previous track
+        function playPrevious() {
+            if (currentTime > 3) {
+                // If we're more than 3 seconds into the track, restart it
+                currentTime = 0;
+                updateProgress();
+            } else {
+                // Otherwise, go to previous track
+                currentTrackIndex = (currentTrackIndex - 1 + tracks.length) % tracks.length;
+                loadTrack(currentTrackIndex);
+            }
+        }
+
+        // Toggle repeat
+        function toggleRepeat() {
+            isRepeating = !isRepeating;
+            repeatBtn.classList.toggle('active', isRepeating);
+        }
+
+        // Toggle shuffle
+        function toggleShuffle() {
+            isShuffling = !isShuffling;
+            shuffleBtn.classList.toggle('active', isShuffling);
+        }
+
+        // Update progress bar
+        function updateProgress() {
+            const progressPercent = (currentTime / totalTime) * 100;
+            progress.style.width = `${progressPercent}%`;
+            
+            // Update time display
+            currentTimeDisplay.textContent = formatTime(currentTime);
+        }
+
+        // Simulate progress (in a real app, this would be tied to actual audio)
+        function simulateProgress() {
+            setInterval(() => {
+                if (isPlaying) {
+                    currentTime++;
+                    
+                    if (currentTime >= totalTime) {
+                        if (isRepeating) {
+                            currentTime = 0;
+                        } else {
+                            playNext();
+                        }
+                    }
+                    
+                    updateProgress();
+                }
+            }, 1000);
+        }
+
+        // Parse time string to seconds
+        function parseTimeToSeconds(timeString) {
+            const parts = timeString.split(':');
+            if (parts.length === 2) {
+                return parseInt(parts[0]) * 60 + parseInt(parts[1]);
+            }
+            return 0;
+        }
+
+        // Format seconds to time string
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+        }
+
+        // Set up event listeners
+        function setupEventListeners() {
+            playPauseBtn.addEventListener('click', togglePlayPause);
+            nextBtn.addEventListener('click', playNext);
+            prevBtn.addEventListener('click', playPrevious);
+            repeatBtn.addEventListener('click', toggleRepeat);
+            shuffleBtn.addEventListener('click', toggleShuffle);
+            
+            // Progress bar click
+            progressBar.addEventListener('click', (e) => {
+                const rect = progressBar.getBoundingClientRect();
+                const clickPosition = (e.clientX - rect.left) / rect.width;
+                currentTime = clickPosition * totalTime;
+                updateProgress();
+            });
+            
+            // Notify button
+            notifyBtn.addEventListener('click', () => {
+                notifyBtn.innerHTML = '<i class="fas fa-check"></i> NOTIFICATIONS ACTIVATED';
+                notifyBtn.style.background = 'linear-gradient(90deg, #2ecc71, #1abc9c)';
+                notifyBtn.disabled = true;
+                
+                // Show a confirmation message
+                setTimeout(() => {
+                    alert('You will be notified when "Echoes in Silence" is released.');
+                }, 300);
+            });
+        }
+
+        // Update countdown
+        function updateCountdown() {
+            // Set release date to 14 days from now
+            const releaseDate = new Date();
+            releaseDate.setDate(releaseDate.getDate() + 14);
+            
+            function update() {
+                const now = new Date();
+                const diff = releaseDate - now;
+                
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                
+                document.getElementById('days').textContent = days.toString().padStart(2, '0');
+                document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+                document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+            }
+            
+            update();
+            setInterval(update, 60000); // Update every minute
+        }
+
+        // Initialize the player when page loads
+        document.addEventListener('DOMContentLoaded', initPlayer);
+    </script>
+</body>
+</html>
